@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -98,7 +98,7 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
 GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于各个领域中（regression，classification，ranking）。这篇文章是我自己对GBDT的总结加上自己的一些理解，所以中间一些内容并不全都是个人的原创。由于自身水平有限，可能会有错误，主要是为了让自己加强对GBDT的理解。
 
 一，GBDT简介:GB">
-<meta property="og:updated_time" content="2016-06-18T12:50:21.000Z">
+<meta property="og:updated_time" content="2016-06-18T15:10:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GBDT的理解和总结">
 <meta name="twitter:description" content="2015/11/21 16:29:29  by guhaohit
@@ -112,13 +112,13 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Muse',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
-      author: '博主'
+      userId: 6297544712798619000,
+      author: '作者'
     }
   };
 </script>
@@ -131,7 +131,7 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
   <title> GBDT的理解和总结 | 谷白告的小窝 </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -186,7 +186,17 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            首頁
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -196,7 +206,7 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            歸檔
+            归档
           </a>
         </li>
       
@@ -206,7 +216,7 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            標籤
+            标签
           </a>
         </li>
       
@@ -259,7 +269,7 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">發表於</span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-11-26T00:25:28+08:00" content="2015-11-26">
               2015-11-26
             </time>
@@ -271,11 +281,11 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">分類於</span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/心得体会/" itemprop="url" rel="index">
+                    <span itemprop="name">心得体会</span>
                   </a>
                 </span>
 
@@ -287,6 +297,13 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
           
 
           
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/26/GBDT的理解和总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/26/GBDT的理解和总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -420,6 +437,10 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
           
   <div class="comments" id="comments">
     
+      <div class="ds-thread" data-thread-key="2015/11/26/GBDT的理解和总结/"
+           data-title="GBDT的理解和总结" data-url="http://yoursite.com/2015/11/26/GBDT的理解和总结/">
+      </div>
+    
   </div>
 
 
@@ -443,10 +464,10 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目錄
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            本站概覽
+            站点概览
           </li>
         </ul>
       
@@ -457,30 +478,30 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
                src="/images/avatar.png"
                alt="guhao_hit" />
           <p class="site-author-name" itemprop="name">guhao_hit</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">把苦涩尝遍，才能自然回甘</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">文章</span>
+              <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
             <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">分類</span>
-              
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
             </div>
           
 
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">標籤</span>
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -490,6 +511,26 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/guhaohit" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1955039424" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
           
         </div>
 
@@ -535,13 +576,13 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  主題 -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -607,6 +648,13 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
@@ -622,16 +670,59 @@ GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于�
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guhaohit"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
   
 
 
 
 
+
+
   
   
   
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 
   
 
