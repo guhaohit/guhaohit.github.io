@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>kaggle比赛：coupon-purchase-prediction | 谷白告的小窝</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="2015/11/27 20:48:35  by guhaohit
+导语：
+我最近做了一个kaggle比赛—coupon-purchase-prediction，是一个关于优惠劵（coupon）推荐的比赛。这个比赛的目的是给一个购物网站的用户推荐他们可能会购买的优惠劵。
+
+一. 数据描述和判定准则这个比赛是kaggle上的一个比赛，这个比赛所做的其实就是构建一个推荐系统，对于一个推荐系统，我们通常采">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kaggle比赛：coupon-purchase-prediction">
+<meta property="og:url" content="http://yoursite.com/2015/12/06/coupon-purchase-prediction/index.html">
+<meta property="og:site_name" content="谷白告的小窝">
+<meta property="og:description" content="2015/11/27 20:48:35  by guhaohit
+导语：
+我最近做了一个kaggle比赛—coupon-purchase-prediction，是一个关于优惠劵（coupon）推荐的比赛。这个比赛的目的是给一个购物网站的用户推荐他们可能会购买的优惠劵。
+
+一. 数据描述和判定准则这个比赛是kaggle上的一个比赛，这个比赛所做的其实就是构建一个推荐系统，对于一个推荐系统，我们通常采">
+<meta property="og:image" content="http://datascience.blog.uhuru.co.jp/wp-content/uploads/2015/10/Blog-Diagram-1.png">
+<meta property="og:updated_time" content="2015-12-06T12:23:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kaggle比赛：coupon-purchase-prediction">
+<meta name="twitter:description" content="2015/11/27 20:48:35  by guhaohit
+导语：
+我最近做了一个kaggle比赛—coupon-purchase-prediction，是一个关于优惠劵（coupon）推荐的比赛。这个比赛的目的是给一个购物网站的用户推荐他们可能会购买的优惠劵。
+
+一. 数据描述和判定准则这个比赛是kaggle上的一个比赛，这个比赛所做的其实就是构建一个推荐系统，对于一个推荐系统，我们通常采">
+  
+    <link rel="alternative" href="/atom.xml" title="谷白告的小窝" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">guhao_hit</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/GBDT/" style="font-size: 10px;">GBDT</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">哈工大计算机小硕一枚，关注机器学习，计算广告，自然语言处理，机器视觉。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">guhao_hit</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">guhao_hit</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-coupon-purchase-prediction" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/06/coupon-purchase-prediction/" class="article-date">
+  	<time datetime="2015-12-06T12:11:45.000Z" itemprop="datePublished">2015-12-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      kaggle比赛：coupon-purchase-prediction
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2015/11/27 20:48:35  by guhaohit</p>
+<h3 id="导语：">导语：</h3><blockquote>
+<p>我最近做了一个kaggle比赛—<a href="https://www.kaggle.com/c/coupon-purchase-prediction" target="_blank" rel="external">coupon-purchase-prediction</a>，是一个关于优惠劵（coupon）推荐的比赛。这个比赛的目的是给一个购物网站的用户推荐他们可能会购买的优惠劵。</p>
+</blockquote>
+<h3 id="一-_数据描述和判定准则">一. 数据描述和判定准则</h3><p>这个比赛是kaggle上的一个比赛，这个比赛所做的其实就是构建一个推荐系统，对于一个推荐系统，我们通常采取先构造(user,item)的pair对，然后再计算pair对发生的可能性，而这个问题是给用户推荐coupon，显然这里的user=用户，item=coupon。因为给出了较多的数据，我先对数据进行一个基本的描述。<br><a id="more"></a><br><img src="http://datascience.blog.uhuru.co.jp/wp-content/uploads/2015/10/Blog-Diagram-1.png" alt="数据的描述"><br>    上面这幅图来自于<a href="http://datascience.blog.uhuru.co.jp/machine-learning/predicting-coupon-purchases-on-ponpare/" target="_blank" rel="external">这里</a>。可以看到，可以看到，我们拿到的数据是2011-7-1至2012-6-23的日志数据，而我们需要预测的是2012-6-26至2012-6-30这一周之内的coupon购买行为。给出的训练集包含22873个用户对于32628个coupon的浏览纪录，但是只给出了其中19413个coupon的特征数据（包括价格，折扣，可用日期等等），所以我们只需要用到这部分的coupon的相关数据就可以了，而对于其中的19368个coupon有用户发生过购买行为。对于测试集是给出了<strong>新的</strong>310个coupon的特征，而我们需要预测的就是对于这新的310个coupon，我们22873个用户会购买哪一些。而我们可以用到的数据基本上可以分成三类数据：用户的数据，coupon的购买数据和位置数据。其中这些数据相当杂乱，出现了大量的缺失和重复，很符合现实中数据的特点。这里说一句题外话，如果有做过阿里推荐比赛的同学，我感觉这道题还是挺类似的。<br>    这次比赛采用的是<a href="https://www.kaggle.com/wiki/MeanAveragePrecision" target="_blank" rel="external">map@n</a>的方法来评测你提交的数据。简单来说，你提交一个文件，给22873个用户（22873行）推荐他们最有可能买的n个coupon，其中这n个coupon是按照可能性从大到小的顺序排列的，也就是说，你对于这n个coupon的排序是会影响你最后的得分的。而对于这道题，n=10，也就是说我只需要给每个用户推荐10个coupon即可。<br>    我们可以将这个问题看做一个两类分类问题，对于给定的user和coupon，预测是属于购买(1)还是属于不购买(0)。对于一个机器学习问题，我们首先需要划分训练集和验证集（测试集已经给定了）。划分方式主要是有两种，第一种是将最后的1周的数据作为验证集，其余的作为训练集；还有一种方法就是将前一周做训练集，后一周做验证集，而我们每次只考虑相邻的两周。对于这两种划分方法，各有各得道理，第一种是按照我们的题目，给出长时间的训练集，预测最后的一周的购买量。第二种方法只让我们的模型学习相邻两周的一些购买习惯，因为人得购买习惯是不断变化的，会随着时间不断变化。对于我来说，我还是采用第一种方式，将给出数据中的最后三周作为我的验证集，其余的作为训练集。</p>
+<h3 id="二-_coupon特征的处理">二. coupon特征的处理</h3><blockquote>
+<p>这节主要讲述我对于coupon的数据的预处理+生成特征向量，这里所说的操作是对于表coupon_list_train和表coupon_list_test。</p>
+</blockquote>
+<p>下面给出我所使用的一些特征：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特征名</th>
+<th style="text-align:left">构造方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">category_name</td>
+<td style="text-align:left">capsule_text(类别) + genre_name(类别)（one-hot）</td>
+</tr>
+<tr>
+<td style="text-align:left">price_rate</td>
+<td style="text-align:left">保留原值price_rate（0-100）</td>
+</tr>
+<tr>
+<td style="text-align:left">reduce_price</td>
+<td style="text-align:left">log(1+ (catalog_price-discount_price))</td>
+</tr>
+<tr>
+<td style="text-align:left">catalog_price</td>
+<td style="text-align:left">log(1+ catalog_price)</td>
+</tr>
+<tr>
+<td style="text-align:left">discount_price</td>
+<td style="text-align:left">log(1+ discount_price)</td>
+</tr>
+<tr>
+<td style="text-align:left">IMMEDIATE_USE_TIME</td>
+<td style="text-align:left">valid_time - disp_time</td>
+</tr>
+<tr>
+<td style="text-align:left">disp_period_C</td>
+<td style="text-align:left">将大于8的值置为8(one-hot)</td>
+</tr>
+<tr>
+<td style="text-align:left">disp_period</td>
+<td style="text-align:left">保留原值disp_period</td>
+</tr>
+<tr>
+<td style="text-align:left">valid_period_NA</td>
+<td style="text-align:left">如果这个值是NA就置为1，否则就置为0</td>
+</tr>
+<tr>
+<td style="text-align:left">valid_period</td>
+<td style="text-align:left">将NA置为365，其余保持原值</td>
+</tr>
+<tr>
+<td style="text-align:left">usable_day</td>
+<td style="text-align:left">统计可以使用的天数</td>
+</tr>
+<tr>
+<td style="text-align:left">large_area_name</td>
+<td style="text-align:left">large_area_name(one-hot)</td>
+</tr>
+<tr>
+<td style="text-align:left">ken_name</td>
+<td style="text-align:left">large_area_name+ken_name(one-hot)</td>
+</tr>
+<tr>
+<td style="text-align:left">small_area_name</td>
+<td style="text-align:left">large_area_name+ken_name+small_area_name(one-hot)</td>
+</tr>
+</tbody>
+</table>
+<p>对于原数据中的缺失值，如果我们会对该数据进行one-hot编码，那么就将缺失值单独作为一类，如果我们将该数据处理为数值特征，那么我们就将缺失值置为最小值或者最大值。对于数值特征来说，我们要进行归一化的操作。</p>
+<h3 id="三-_User特征的处理">三. User特征的处理</h3><blockquote>
+<p>这节主要是讲述我对user特征的预处理和特征向量的产生方式，用的数据是user_list的表的数据。</p>
+</blockquote>
+<p>下面给出我提取的一些特征：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特征名</th>
+<th style="text-align:left">构造方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">gender</td>
+<td style="text-align:left">保留原值（one-hot）</td>
+</tr>
+<tr>
+<td style="text-align:left">age</td>
+<td style="text-align:left">保留原值</td>
+</tr>
+<tr>
+<td style="text-align:left">pref_name</td>
+<td style="text-align:left">保留原值（one-hot）</td>
+</tr>
+<tr>
+<td style="text-align:left">reg_date</td>
+<td style="text-align:left">拆分为月，日和星期（one-hot）</td>
+</tr>
+</tbody>
+</table>
+<p>对于User的原始特征并不多，而我们可以用统计的方式，统计出一些特征来表示该用户的购物习惯。<br>我们在这只关注购买的行为习惯，我从coupon_detail_train表中提取出当前user的购买记录，与coupon_list_train做交集，得到有coupon特征的该user之前的购买coupon集合。然后我们将使用这个集合来提取关于user购买习惯的特征。<br>首先我们做的就是计算该用户之前购买的所有coupon特征向量的均值向量。计算之前购买过的coupon的数量，并对这个值取log。找到catalog_price，discount_price和reduce_price的最大和最小值，并对这些值取log。</p>
+<h3 id="四-_特征选择">四. 特征选择</h3><blockquote>
+<p>至此我们已经构造出了两部分的特征，而构造特征不仅仅只是拍脑袋想，我们先要根据一些先验知识和一些相关领域知识得到一些特征，然后我们需要采用方法对这些特征进行筛选，之前我给出的特征是我已经筛选过了。</p>
+</blockquote>
+<p>我采取的筛选的方法是计算特征的AUC值，通过将所有特征单独拿出来和目标计算AUC值，选取适当的截断值（这里我使用的方法就是查看是否有阶跃值，选取阶跃值为我的截断值），最后留下的就是我前面所描述的特征。当然，还可以采取多轮选择，或者是逐个增加的方式来删选特征。<br>关于AUC的介绍和计算方法，我这里推荐一篇<a href="http://alexkong.net/2013/06/introduction-to-auc-and-roc/" target="_blank" rel="external">文章</a>。</p>
+<h3 id="五-_模型的介绍">五. 模型的介绍</h3><p>可选择的模型很多，也没有什么特别的方法，没有对所有的问题都适用的方法，对于推荐系统，我个人喜欢使用GBDT，RF和LR，其中baseline基本上都是LR。<br>对于这个模型，我使用的是神经网络，具体来说，是带有两个隐含层的神经网络。编程使用的是python中的chainer包。对于具体的训练方法，我就不多说了，我这里主要用了两个trick：一个是采用mini-batch的方式训练，每次都要重新采样负例。还有一个是训练的时候采用dropout的方式。采用这样的trick主要是想要提高我们模型的泛化能力。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/11/26/GBDT的理解和总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GBDT的理解和总结</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="coupon-purchase-prediction" data-title="kaggle比赛：coupon-purchase-prediction" data-url="http://yoursite.com/2015/12/06/coupon-purchase-prediction/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 guhao_hit
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

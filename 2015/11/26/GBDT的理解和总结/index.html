@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>GBDT的理解和总结 | 谷白告的小窝</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="2015/11/21 16:29:29  by guhaohit
+导语:
+GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于各个领域中（regression，classification，ranking）。这篇文章是我自己对GBDT的总结加上自己的一些理解，所以中间一些内容并不全都是个人的原创。由于自身水平有限，可能会有错误，主要是为了让自己加强对GBDT的理解。
+
+一，GBDT简介:GB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GBDT的理解和总结">
+<meta property="og:url" content="http://yoursite.com/2015/11/26/GBDT的理解和总结/index.html">
+<meta property="og:site_name" content="谷白告的小窝">
+<meta property="og:description" content="2015/11/21 16:29:29  by guhaohit
+导语:
+GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于各个领域中（regression，classification，ranking）。这篇文章是我自己对GBDT的总结加上自己的一些理解，所以中间一些内容并不全都是个人的原创。由于自身水平有限，可能会有错误，主要是为了让自己加强对GBDT的理解。
+
+一，GBDT简介:GB">
+<meta property="og:updated_time" content="2016-06-18T12:50:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GBDT的理解和总结">
+<meta name="twitter:description" content="2015/11/21 16:29:29  by guhaohit
+导语:
+GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于各个领域中（regression，classification，ranking）。这篇文章是我自己对GBDT的总结加上自己的一些理解，所以中间一些内容并不全都是个人的原创。由于自身水平有限，可能会有错误，主要是为了让自己加强对GBDT的理解。
+
+一，GBDT简介:GB">
+  
+    <link rel="alternative" href="/atom.xml" title="谷白告的小窝" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/avatar.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">guhao_hit</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/GBDT/" style="font-size: 10px;">GBDT</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">哈工大计算机小硕一枚，关注机器学习，计算广告，自然语言处理，机器视觉。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">guhao_hit</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/avatar.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">guhao_hit</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-GBDT的理解和总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/26/GBDT的理解和总结/" class="article-date">
+  	<time datetime="2015-11-25T16:25:28.000Z" itemprop="datePublished">2015-11-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GBDT的理解和总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GBDT/">GBDT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2015/11/21 16:29:29  by guhaohit</p>
+<h3 id="导语:">导语:</h3><blockquote>
+<p>GBDT是非常有用的机器学习的其中一个算法，目前广泛应用于各个领域中（regression，classification，ranking）。这篇文章是我自己对GBDT的总结加上自己的一些理解，所以中间一些内容并不全都是个人的原创。由于自身水平有限，可能会有错误，主要是为了让自己加强对GBDT的理解。</p>
+</blockquote>
+<h3 id="一，GBDT简介:">一，GBDT简介:</h3><p>GBDT的中文名叫做梯度提升决策树。由名字我们就可以看出，这个算法是由两部分构成的，梯度提升和决策树，而GBDT就是用简单决策树作为基分类器的梯度提升方法。<br>对于决策树，在这里不多做介绍，树形结构，建立决策树的关键，即在当前状态下选择哪个属性作为分类依据。根据不同的目标函数，建立决策树主要有三种算法：ID3，C4.5和CART。具体内容可以参考<a href="http://weibo.com/u/2060750830" target="_blank" rel="external">@李航老师</a>的《统计学习方法》。接下来我将重点说一说梯度提升。</p>
+<a id="more"></a>
+<h3 id="二，梯度提升：">二，梯度提升：</h3><blockquote>
+<p><strong>Gradient Boosting = Gradient Descent + Boosting</strong></p>
+</blockquote>
+<p>梯度提升其实就是一种提升方法（Boosting）。我们最熟悉的应用boosting的算法就是Adaboost了，利用多个弱分类器，通过加法模型（ensemble）的方式组合起来，得到效果不错的分类器。为了更好的理解boosting这个方法，我想先介绍前向分步算法，然后再来介绍梯度提升。</p>
+<h4 id="1-_前向分布算法">1. 前向分布算法</h4><blockquote>
+<p>先说结论：Adaboost算法可以理解为加法模型（additive model）、损失函数为指数函数、学习算法为前向分布算法的二类分类学习算法。</p>
+</blockquote>
+<p>下面给出加法模型的表达式：<br>$$H(x) = \sum_{t}{\rho_{t}h_t(x)}$$<br>其中 $t$ 表示弱分类器的数量，$h_t(x)$表示弱分类器，$\rho_{t}$表示该弱分类器的权重。<br>简单来说，前向分布算法就是在多轮迭代中，每次引入一个弱分类器来<em>弥补</em>我们已有的分类器的缺陷。</p>
+<p><font color="red">在Adaboost算法中，我们定义缺陷为高权重的数据。</font>我们生成的新弱分类器优先将高权重的数据拟合，而将拟合的好的数据的权重降低，将拟合的不好的数据的权重提高，从而在下个弱分类器中能更重视这些分错的数据。</p>
+<h4 id="2-_Boost方法">2. Boost方法</h4><blockquote>
+<p>对于一个问题，如果存在一个多项式的学习算法能学习，并且正确率很高，那么就称为强可学习的；如果正确率仅比随机猜测略好，则称为弱可学习的。在PAC (probably approximately correct)学习框架下，强可学习与弱可学习是等价的。</p>
+</blockquote>
+<p>对于一个分类问题，我们存在两种类型的分类器：强分类器和弱分类器，相对于强分类器，弱分类器更容易得到。这样一来，如果我们已经得到了“弱学习算法”，那么我们能否将它<em>提升</em>（boost）为“强学习算法”。<br>对于提升算法而言，有两个问题需要解决：1.找到当前弱分类器的缺陷。2.将弱分类器组合起来，弥补缺陷，得到一个强分类器。<br>对于Adaboost算法来说，找到弱分类器的缺陷为错分的数据，通过改变数据的权值并采用加权投票的方式来弥补缺陷。</p>
+<h4 id="3-_梯度提升（Gradient_Boosting）">3. 梯度提升（Gradient Boosting）</h4><blockquote>
+<p>这里我解释梯度提升为利用梯度下降的思想，通过拟合梯度的方法来将弱分类器提升为强分类器。</p>
+</blockquote>
+<p><font color="red">在Gradient Boosting算法中，我们定义缺陷为梯度。</font>有可能会有疑问，为什么可以把梯度定义为缺陷呢？先来回顾下梯度下降的概念：<br>$$\theta_{i}:=\theta_{i}-\rho \frac{\partial{J}}{\partial{\theta_{i}}}$$</p>
+<blockquote>
+<p>将$f(x)$泰勒展开$f(x+\varepsilon)=f(x)+\frac{\partial{f(x)}}{\partial{x}}\varepsilon +O(x^2)$，我们想让$f(x+\varepsilon)-f(x)&lt;0$，即$\frac{\partial{f(x)}}{\partial{x}}\varepsilon &lt;0$，所以我们取$\varepsilon = -\frac{\partial{f(x)}}{\partial{x}}$使得$\frac{\partial{f(x)}}{\partial{x}}\varepsilon $最小，所以梯度下降又被称为最速梯度下降法。</p>
+</blockquote>
+<p>假设我们的模型为$F(x)$，Loss function为$L(y,F(x))=\sum_{i}{L(y_{i},F(x_i))}$，我们需要调整$F(x_i)$使得Loss function最小。我们将$F(x_i)$当作之前的参数$\theta_i$求偏导$\frac{\partial{L(y_{i},F(x_i))}}{\partial{F(x_i)}}$，然后我们需要做的就是更新参数:<br>$$F_{new}(x_i) = F(x_i)-\rho \times \frac {\partial{L(y_{i},F(x_i))}}{\partial{F(x_i)}}   $$<br>上式中，$x_i$表示一个样本点，对于训练集中的所有点，都满足上式。请注意一点，这里的$F(x)$是我们的模型，我们通过一次迭代，得到了一个新的模型，由梯度下降的定理来说，这个新的$F(x)$对于训练集上的所有的点，使得我们的Loss function更小。<br>到此为止，我们得到了一个惊喜的发现，我们找到了公式，能使得我们的模型变的更好。现在我们需要解决的就是，将所求得的梯度值拟合出来。后面的事很容易想到，我们使用决策树来拟合这个梯度，得到新的公式：<br>$$F_{n+1}(x) = F_{n}(x) + \eta \times T_{n+1}(x)$$<br>其中$T_{n+1}$表示的通过拟合$F_{n}(x)$的梯度得到的决策树，$\eta$可以看成是$-\rho$。</p>
+<h4 id="4-_梯度提升应用于回归问题">4. 梯度提升应用于回归问题</h4><blockquote>
+<p>对于梯度提升方法，可以应用于regression，classification，ranking等多个方面，而难度也是逐渐增加。</p>
+</blockquote>
+<p>对于回归问题，由之前的分析，很容易给出相对应算法：</p>
+<blockquote>
+<p><strong>give any differentiable loss function L:</strong><br><strong>start with an initial model, set</strong> $F(x) =\frac{\sum_{i=1}^{n}{y_i}}{n}$<br><strong>iterate until converge:</strong><br><strong>calculate negative gradients</strong> $-g(x_i)=-\frac {\partial{L(y_{i},F(x_i))}}{\partial{F(x_i)}}$<br><strong>fit a regression tree h to negative gradients </strong>$-g(x_i)$<br>$F:=F+\rho h$</p>
+</blockquote>
+<p>其中$\rho$可以采用求极值的方式进行求解，使得Loss function最小。<br>对于机器学习算法来说都会存在过拟合的问题，如果我们得到的拟合梯度的决策树太复杂或者树的个数过多的话，容易出现过拟合的现象，我们将采用正则化的方法来保证我们的模型不会过拟合。<br>可以采用CART剪枝的方法来对每次的生成树进行控制，并且加入正则项$\lambda |T|$，其中$|T|$表示当前已有的树的数目，也可以将T当成参数来调整。<br>在实际项目中，经常用到一种叫做<code>shrinkage</code>的方法，就是它不完全信任每一个棵拟合梯度的树，它认为每棵树只学到了真理的一小部分，累加的时候只累加一小部分，通过多学几棵树弥补不足。用方程来看更清晰，即：<br>$$F_{n+1}(x)=F_{n}(x)+\upsilon \times \eta T_{n+1}(x)$$<br>一个有趣的现象就是当$\upsilon$越小时，$|T|$的值越大，这些值都可以当做参数在验证集中调整。<code>shrinkage</code>方法在实际应用中非常有效，但是目前缺少相应的理论证明。</p>
+<h4 id="5-_梯度提升应用于分类问题">5. 梯度提升应用于分类问题</h4><p>假设我们要将数据分为$K$类，我们建立$K$个模型$F_{1}(x),F_{2}(x),…F_{K}(x)$，采用信息熵的思想，我们转化成概率值：<br>$$P_{i}(x)=\frac {e^{F_{i}(x)}}{\sum_{c=1}^{K}{e^{F_{c}(x)}}}$$<br>上式代表了当前数据<strong>x</strong>于第<strong>i</strong>类的概率值。对于每一个数据，可得到$P(x)=[P_{1}(x),P_{2}(x),…P_{K}(x)]$，假设这个数据属于第<strong>j</strong>类，那么$Y=[0,…,1,…,0]$，我们建立Loss function为$L(P(x),Y)$，有很多这样的函数，比如softmax回归的目标函数和KL-divergence。<br>接下来就跟之前说的回归问题的解法一样了，唯一的区别就是我们每次要得到<strong>K</strong>棵树来更新<strong>K</strong>个模型。</p>
+<h3 id="三-_梯度提升的进阶">三. 梯度提升的进阶</h3><blockquote>
+<p>前面说的梯度提升的方法是通过拟合梯度，而梯度由泰勒展开推导出来的，能否能利用Loss function的二阶导数呢？</p>
+</blockquote>
+<p>我们直接从Loss function的泰勒展开开始：<br>$$\begin{split}<br>L(y,F_{n}(x))&amp;=\sum_{i}{L(y_{i},F_{n}(x_i))}\\<br>&amp;=\sum_{i}{L(y_{i},F_{n-1}(x_i)+T_{n}(x_{i}))}\\<br>&amp;=\sum_{i}\left[ { L(y_{i},F_{n-1}(x_i))} + g_{i}^{n-1}T_{n}(x_i)+\frac{1}{2}h_{i}^{n-1}T_{n}^2(x_i)\right]<br>\end{split}$$<br>其中，$g_{i}^{n-1}=\frac{\partial{L(y_{i},F_{n-1}(x_i))}}{\partial{F_{n-1}(x_i)}}$，$h_{i}^{n-1}=\frac{\partial^{2}{L(y_{i},F_{n-1}(x_i))}}{\partial^{2}{F_{n-1}(x_i)}}$。<br>很容易得到：<br>$$L(y,F_{n}(x))-L(y,F_{n-1}(x))=\sum_{i}\left[ g_{i}^{n-1}T_{n}(x_i)+\frac{1}{2}h_{i}^{n-1}T_{n}^2(x_i)\right]$$<br>很容易得到，当$T_{n}(x_{i})=-\frac{g_{i}^{n-1}}{h_{i}^{n-1}}$时，能使得上式左边最小，即$L(y,F_{n}(x))-L(y,F_{n-1}(x))=\sum_{i}\left[ -\frac{(g_{i}^{n-1})^2}{2h_{i}^{n-1}}\right]$，只有当$h_{i}^{n-1}&gt;0$的时候才能满足。再回过头看一看$h_{i}^{n-1}$的定义，它是我们Loss function关于$F(x)$的二阶偏导，当Loss function是下凸函数时，能满足$h_{i}^{n-1}&gt;0$这个条件。细心的人应该已经发现了，其实这个就是牛顿法的变形。接下来我们只需要用决策树来拟合$-\frac{g_{i}^{n-1}}{h_{i}^{n-1}}$就好了。</p>
+<blockquote>
+<p>之后看来<a href="http://weibo.com/u/2397265244" target="_blank" rel="external">@陈天奇怪</a>同学写的关于GBDT的文章，看到他讲解了引入正则化的方法，而且xgboost也是用的这种方式进行的实现。</p>
+</blockquote>
+<p>我们对目标式子中加入正则化（对生成的树进行限制）：<br>$$\begin{split}<br>Obj^{(n)}&amp;=L(y,F_{n}(x))-L(y,F_{n-1}(x))\\<br>&amp;=\sum_{i}\left[ g_{i}^{n-1}T_{n}(x_i)+\frac{1}{2}h_{i}^{n-1}T_{n}^2(x_i)\right]+\Omega \left( T_{n} \right)<br>\end{split}$$<br>我们先来定义树的结构，假设生成的树有M个叶子节点，每一个x最后会投影到其中一个叶子节点上，我们定义这个投影为$q(x): \mathscr{R}^d\rightarrow { { 1,2,…,M }}$，每个叶子节点的输出值为$w_{1},w_{2},…,w_{M}\in  \mathscr{R}$，我们生成的树为：$T_{n}(x)=w_{q(x)}$。<br>而对于正则化项，我们这样定义：$\Omega \left( T_{n} \right)=\gamma M+\frac{1}{2}\lambda \sum_{j=1}^{M}{w_{j}^2}$。正则化项分为两部分，叶子节点数目和叶子节点的输出值，这不是正则化项的唯一定义形式，我这用的是<a href="http://weibo.com/u/2397265244" target="_blank" rel="external">@陈天奇怪</a>ppt中的方法。<br>$$\begin{split}<br>Obj^{(n)}&amp;=\sum_{i}\left[ g_{i}^{n-1}T_{n}(x_i)+\frac{1}{2}h_{i}^{n-1}T_{n}^2(x_i)\right]+\Omega \left( T_{n} \right) \\<br>&amp;=\sum_{i}\left[ g_{i}^{n-1}T_{n}(x_i)+\frac{1}{2}h_{i}^{n-1}T_{n}^2(x_i)\right]+\gamma M+\frac{1}{2}\lambda \sum_{j=1}^{M}{w_{j}^2} \\<br>&amp;=\sum_{j=i}^{M}\left[ \left(\sum_{i\in I_{j}}{g_{i}^{n-1}} \right)w_{j}+<br>\frac{1}{2}\left( \sum_{i\in I_{j}}{h_{i}^{n-1}+\lambda} \right)w_{j}^2 + \gamma M\right] \\<br>&amp;=\sum_{j=i}^{M}\left[ G_{j}w_{j}+<br>\frac{1}{2}\left( H_{j}+\lambda \right) w_{j}^2 + \gamma M\right]<br>\end{split}$$<br>上式中，$I_{j}$表示j叶子节点中样本的集合，$I_{j}={ i \,|\, q(x_{i}=j)}$。$G_{j}=\sum_{i\in I_{j}}{g_{i}^{n-1}}$，$H_{j}=\sum_{i\in I_{j}}{h_{i}^{n-1}}$。<br>现在我们对于每一个叶子节点，$w_j=-\frac{G_{j}}{H_{j}+\lambda}$时能得到最小值，最小值为$-\frac{1}{2}\sum_{j=1}^{M}{\frac{G_{j}^2}{H_{j}+\lambda}+\gamma M}$。<br>最后说一说这种方法的生成树的方法，将数据集合按照决策树的方法进行分裂（split），但是我们定义一种新的分裂标准：<br>$$Gain = \frac{G_{L}^2}{H_{L}+\lambda}+\frac{G_{R}^2}{H_{R}+\lambda}-\frac{\left( G_{L}+G_{R}\right)^2}{ H_{L}+H_{R}+\lambda}-\gamma$$<br>这表示把一棵树的一个结点分裂成两棵子树后Loss function减小的值，我们找到$Gain$最大的分裂方法即可。<br>我们可以看到，我们要求$H_{j}+\lambda&gt;0$，对比于之前我们没有加入正则化项之前的要求，已经放松很多了，需要叶子节点所有的样本的二阶偏导之和大于$-\lambda$即可。<br>我们还可以通过剪枝来优化我们的方法，生成树之后，从下往上，将$Gain&lt;0$的子树剪掉。</p>
+<h3 id="参考资料：">参考资料：</h3><ol>
+<li><a href="https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">Introduction to Boosted Trees by 陈天奇</a></li>
+<li><a href="https://www.cse.cuhk.edu.hk/irwin.king/_media/presentations/gbdt-tom.pdf" target="_blank" rel="external">A Discussion on GBDT: Gradient Boosting Decision Tree by Tom</a></li>
+<li><a href="http://www.ccs.neu.edu/home/vip/teach/MLcourse/4_boosting/slides/gradient_boosting.pdf" target="_blank" rel="external">A Gentle Introduction to Gradient Boosting by Cheng Li</a></li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/06/coupon-purchase-prediction/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          kaggle比赛：coupon-purchase-prediction
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="GBDT的理解和总结" data-title="GBDT的理解和总结" data-url="http://yoursite.com/2015/11/26/GBDT的理解和总结/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 guhao_hit
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
